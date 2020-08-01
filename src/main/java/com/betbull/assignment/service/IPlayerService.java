@@ -17,7 +17,7 @@ public interface IPlayerService {
 
     List<Player> getAll();
 
-    List<Player> getAllByTeamId(String teamId);
-
     void delete(String id);
+
+    List<Player> getAllByTeamIdAndEndYear(String teamId, String endYear);
 }

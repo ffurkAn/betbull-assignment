@@ -28,6 +28,7 @@ import java.util.List;
 public class PlayerController {
 
     public static final String TEAM_ID = "teamId";
+    public static final String END_YEAR = "endYear";
 
     @Autowired
     IPlayerService playerService;
@@ -77,8 +78,9 @@ public class PlayerController {
                     content = @Content(schema = @Schema(implementation = MyResponse.class)))
     })
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Player>> getAll(@RequestParam(value = TEAM_ID, required = false) String teamId) {
-        return ResponseEntity.status(HttpStatus.OK).body(playerService.getAllByTeamId(teamId));
+    public ResponseEntity<List<PlayerDTO>> getAll(@RequestParam(value = TEAM_ID, required = false) String teamId,
+                                               @RequestParam(value = END_YEAR, required = false) String endYear) {
+        return ResponseEntity.status(HttpStatus.OK).body(PlayerDTO.mapAll(playerService.getAllByTeamIdAndEndYear(teamId, endYear)));
     }
 
     /**
@@ -95,12 +97,6 @@ public class PlayerController {
         playerService.delete(playerDTO.getId());
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
-
-
-
-
-
-
 
 
 }

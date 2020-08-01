@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService implements ITeamService {
@@ -31,7 +32,7 @@ public class TeamService implements ITeamService {
         if(StringUtils.isEmpty(playerId)){
             return getAll();
         }else{
-            return getAll(); //teamRepository.findByPlayerId(playerId);
+            return getAll().stream().filter(t -> t.getPlayerSet().stream().anyMatch(p -> p.getId().equals(playerId))).collect(Collectors.toList());
         }
     }
 }

@@ -9,4 +9,5 @@ public class TeamPlayerDTO {
 
     private String teamId;
     private String playerId;
+    private Integer contractEndYear;
 }

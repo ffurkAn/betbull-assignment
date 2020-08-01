@@ -15,4 +15,5 @@ public class TeamPlayer extends BaseEntity{
 
     private String teamId;
     private String playerId;
+    private Integer contractEndYear;
 }

@@ -44,6 +44,11 @@ public class TeamPlayerService implements ITeamPlayerService {
 
     }
 
+    @Override
+    public List<TeamPlayer> findByEndYear(int endYear) {
+        return teamPlayerRepository.findAllByEndYear(endYear);
+    }
+
     public void delete(String teamId, String playerId){
 
         Optional<TeamPlayer> optionalTeamPlayer = teamPlayerRepository.findByTeamIdAndPlayerId(teamId, playerId);

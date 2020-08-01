@@ -7,11 +7,9 @@ import com.betbull.assignment.model.entity.Player;
 import com.betbull.assignment.model.entity.Team;
 import com.betbull.assignment.model.entity.TeamPlayer;
 import com.betbull.assignment.repository.PlayerRepository;
-import com.betbull.assignment.repository.TeamPlayerRepository;
 import com.betbull.assignment.service.IPlayerService;
 import com.betbull.assignment.service.ITeamService;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +33,7 @@ public class PlayerService implements IPlayerService {
 
         Optional<Team> t = teamService.findById(playerDTO.getTeamId());
 
-        if(!t.isPresent()){
+        if (!t.isPresent()) {
             throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + playerDTO.getTeamId());
         }
 
@@ -62,13 +60,13 @@ public class PlayerService implements IPlayerService {
 
         Optional<Player> playerOptional = findById(playerDTO.getId());
 
-        if(!playerOptional.isPresent()){
+        if (!playerOptional.isPresent()) {
             throw new BetException("500", "Güncellenmek istenen oyuncu bulunamadı. id:" + playerDTO.getId());
         }
 
-        Optional<Team> t =  teamService.findById(playerDTO.getTeamId());
+        Optional<Team> t = teamService.findById(playerDTO.getTeamId());
 
-        if(!t.isPresent()){
+        if (!t.isPresent()) {
             throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + playerDTO.getTeamId());
         }
 
@@ -81,7 +79,7 @@ public class PlayerService implements IPlayerService {
     }
 
     @Override
-    public Optional<Player> findById(String playerId){
+    public Optional<Player> findById(String playerId) {
 
         return playerRepository.findById(playerId);
     }
@@ -91,24 +89,48 @@ public class PlayerService implements IPlayerService {
         return playerRepository.findAll();
     }
 
-    @Override
-    public List<Player> getAllByTeamId(String teamId) {
-        if(StringUtils.isEmpty(teamId)){
-            return getAll();
-        }else{
-            return getAll().stream().filter(p -> p.getTeamSet().stream().anyMatch(t -> t.getId().equals(teamId))).collect(Collectors.toList());
-        }
+    private List<Player> getAllByTeamId(String teamId) {
+        return getAll().stream().filter(p -> p.getTeamSet().stream().anyMatch(t -> t.getId().equals(teamId))).collect(Collectors.toList());
+
+    }
+
+    private List<Player> getAllByEndYear(int endYear) {
+
+        List<TeamPlayer> teamPlayerList = teamPlayerService.findByEndYear(endYear);
+        List<String> playerIdList = new ArrayList<>();
+        teamPlayerList.forEach(teamPlayer -> playerIdList.add(teamPlayer.getPlayerId()));
+        return getAll().stream().filter(p -> playerIdList.contains(p.getId())).collect(Collectors.toList());
+
     }
 
     @Override
     public void delete(String id) {
         Optional<Player> playerOptional = findById(id);
 
-        if(!playerOptional.isPresent()){
+        if (!playerOptional.isPresent()) {
             throw new BetException("500", "Oyuncu bulunamadı. id: " + id);
         }
 
         teamPlayerService.deleteByPlayerId(id);
+    }
+
+    @Override
+    public List<Player> getAllByTeamIdAndEndYear(String teamId, String endYear) {
+
+        if (StringUtils.isEmpty(teamId) && StringUtils.isEmpty(endYear)) {
+            return getAll();
+        } else if (StringUtils.isEmpty(teamId)) {
+            return getAllByEndYear(Integer.parseInt(endYear));
+        } else if (StringUtils.isEmpty(endYear)) {
+            return getAllByTeamId(teamId);
+        } else {
+
+            return getAllByEndYear(Integer.parseInt(endYear))
+                    .stream()
+                    .filter(p -> p.getTeamSet().stream().anyMatch(t -> t.getId().equals(teamId)))
+                    .collect(Collectors.toList());
+        }
+
     }
 
 }

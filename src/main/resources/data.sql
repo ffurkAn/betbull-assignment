@@ -8,12 +8,12 @@ INSERT INTO player (id, name) values ('5', 'player3');
 INSERT INTO player (id, name) values ('6', 'player4');
 INSERT INTO player (id, name) values ('7', 'player5');
 
-INSERT INTO team_player (id, team_id, player_id) VALUES ('99', '1', '3');
-INSERT INTO team_player (id, team_id, player_id) VALUES ('98', '1', '5');
-INSERT INTO team_player (id, team_id, player_id) VALUES ('97', '2', '3');
-INSERT INTO team_player (id, team_id, player_id) VALUES ('96', '1', '4');
-INSERT INTO team_player (id, team_id, player_id) VALUES ('95', '2', '6');
-INSERT INTO team_player (id, team_id, player_id) VALUES ('94', '1', '6');
-INSERT INTO team_player (id, team_id, player_id) VALUES ('93', '1', '7');
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('99', '1', '3', 2020);
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('98', '1', '5', 2023);
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('97', '2', '3', 2011);
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('96', '1', '4', 2030);
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('95', '2', '6', 2022);
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('94', '1', '6', 2022);
+INSERT INTO team_player (id, team_id, player_id, contract_end_year) VALUES ('93', '1', '7', 2022);
 
 
