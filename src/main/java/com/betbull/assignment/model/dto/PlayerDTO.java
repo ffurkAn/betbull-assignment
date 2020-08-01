@@ -17,8 +17,6 @@ public class PlayerDTO {
 
     private String id;
     private String name;
-    @JsonIgnore
-    private String teamId;
 
 
    public static PlayerDTO map(Player player) {
@@ -36,8 +34,4 @@ public class PlayerDTO {
         return result;
     }
 
-    PlayerDTO(String id, String name) {
-        this.id=id;
-        this.name=name;
-    }
 }

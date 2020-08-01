@@ -1,13 +1,15 @@
 package com.betbull.assignment.service.impl;
 
 import com.betbull.assignment.model.BetException;
-import com.betbull.assignment.model.dto.PlayerDTO;
+import com.betbull.assignment.model.dto.ContractPriceDTO;
+import com.betbull.assignment.model.dto.SavePlayerDTO;
 import com.betbull.assignment.model.dto.TeamPlayerDTO;
 import com.betbull.assignment.model.entity.Player;
 import com.betbull.assignment.model.entity.Team;
 import com.betbull.assignment.model.entity.TeamPlayer;
 import com.betbull.assignment.repository.PlayerRepository;
 import com.betbull.assignment.service.IPlayerService;
+import com.betbull.assignment.service.ITeamPlayerService;
 import com.betbull.assignment.service.ITeamService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +28,19 @@ public class PlayerService implements IPlayerService {
     PlayerRepository playerRepository;
 
     @Autowired
-    TeamPlayerService teamPlayerService;
+    ITeamPlayerService teamPlayerService;
 
     @Override
-    public void savePlayer(PlayerDTO playerDTO) {
+    public void savePlayer(SavePlayerDTO savePlayerDTO) {
 
-        Optional<Team> t = teamService.findById(playerDTO.getTeamId());
+        Optional<Team> t = teamService.findById(savePlayerDTO.getTeamId());
 
         if (!t.isPresent()) {
-            throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + playerDTO.getTeamId());
+            throw new BetException("ER1", "Belirtilen id için takım bulunamadı. id:" + savePlayerDTO.getTeamId());
         }
 
         Player player = new Player();
-        player.setName(playerDTO.getName());
+        player.setName(savePlayerDTO.getName());
 
         Set<Team> teamSet = new HashSet<>();
         teamSet.add(t.get());
@@ -56,22 +58,22 @@ public class PlayerService implements IPlayerService {
     }
 
     @Override
-    public void updatePlayer(PlayerDTO playerDTO) {
+    public void updatePlayer(SavePlayerDTO savePlayerDTO) {
 
-        Optional<Player> playerOptional = findById(playerDTO.getId());
+        Optional<Player> playerOptional = findById(savePlayerDTO.getId());
 
         if (!playerOptional.isPresent()) {
-            throw new BetException("500", "Güncellenmek istenen oyuncu bulunamadı. id:" + playerDTO.getId());
+            throw new BetException("500", "Güncellenmek istenen oyuncu bulunamadı. id:" + savePlayerDTO.getId());
         }
 
-        Optional<Team> t = teamService.findById(playerDTO.getTeamId());
+        Optional<Team> t = teamService.findById(savePlayerDTO.getTeamId());
 
         if (!t.isPresent()) {
-            throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + playerDTO.getTeamId());
+            throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + savePlayerDTO.getTeamId());
         }
 
         Player playerFound = playerOptional.get();
-        playerFound.setName(playerDTO.getName());
+        playerFound.setName(savePlayerDTO.getName());
         playerFound.getTeamSet().add(t.get());
 
         playerRepository.save(playerFound);
@@ -131,6 +133,11 @@ public class PlayerService implements IPlayerService {
                     .collect(Collectors.toList());
         }
 
+    }
+
+    @Override
+    public String getContractPriceForPlayer(ContractPriceDTO contractPriceDTO) {
+        return "";
     }
 
 }

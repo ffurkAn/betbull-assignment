@@ -3,7 +3,9 @@ package com.betbull.assignment.controller;
 
 import com.betbull.assignment.constant.Globals;
 import com.betbull.assignment.model.MyResponse;
+import com.betbull.assignment.model.dto.ContractPriceDTO;
 import com.betbull.assignment.model.dto.PlayerDTO;
+import com.betbull.assignment.model.dto.SavePlayerDTO;
 import com.betbull.assignment.model.entity.Player;
 import com.betbull.assignment.service.IPlayerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +37,7 @@ public class PlayerController {
 
 
     /**
-     * @param playerDTO
+     * @param savePlayerDTO
      * @return
      */
     @Operation(summary = "Proje Tanımlama Servisi",
@@ -45,14 +47,14 @@ public class PlayerController {
                     content = @Content(schema = @Schema(implementation = MyResponse.class)))
     })
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MyResponse> save(@RequestBody PlayerDTO playerDTO) {
-        playerService.savePlayer(playerDTO);
+    public ResponseEntity<MyResponse> save(@RequestBody SavePlayerDTO savePlayerDTO) {
+        playerService.savePlayer(savePlayerDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
 
 
     /**
-     * @param playerDTO
+     * @param savePlayerDTO
      * @return
      */
     @Operation(summary = "Proje Tanımlama Servisi",
@@ -62,8 +64,8 @@ public class PlayerController {
                     content = @Content(schema = @Schema(implementation = MyResponse.class)))
     })
     @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MyResponse> update(@RequestBody PlayerDTO playerDTO) {
-        playerService.updatePlayer(playerDTO);
+    public ResponseEntity<MyResponse> update(@RequestBody SavePlayerDTO savePlayerDTO) {
+        playerService.updatePlayer(savePlayerDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
 
@@ -98,5 +100,16 @@ public class PlayerController {
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
 
+
+    @Operation(summary = "Proje Tanımlama Servisi",
+            description = "Proje ve girişimci/girişim şirketi bilgilerinin tanımlandığı servistir.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = Globals.SUCCESS,
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    @RequestMapping(value = "/getContractPrice", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getContractPriceForPlayer(@RequestBody ContractPriceDTO contractPriceDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(playerService.getContractPriceForPlayer(contractPriceDTO));
+    }
 
 }
