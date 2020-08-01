@@ -20,27 +20,18 @@ import java.util.Arrays;
 @Configuration
 public class SwaggerConfig implements WebMvcConfigurer {
 
-    public static final String API_KEY = "api_key";
-
     @Bean
     public OpenAPI customOpenAPI() {
 
         Contact c = new Contact();
-        c.setEmail("kd_kfs@mkk.com.tr");
-        c.setName("Merkezi Kayıt Kuruluşu A.Ş.");
-        c.setUrl("https://mkk.com.tr");
+        c.setEmail("ffurkan.tanriverdi@gmail.com");
+        c.setName("A. Furkan Tanrıverdi");
+        c.setUrl("https://github.com/ffurkAn");
 
         return new OpenAPI()
-                .components(new Components()
-                        .addSecuritySchemes(API_KEY, new SecurityScheme()
-                                .type(SecurityScheme.Type.APIKEY)
-                                .description("API Key Authentication via JWT")
-                                .in(SecurityScheme.In.HEADER)
-                                .name("asdad")))
-                .security(Arrays.asList(new SecurityRequirement().addList(API_KEY)))
                 .info(new Info()
-                        .title("Kitle Fonlama Sistemi REST API")
-                        .description("Bir projenin veya girişim şirketinin ihtiyaç duyduğu fonun toplanması için kullanılacak sistemdir.")
+                        .title("BetBull REST API")
+                        .description("Sosyal Yazılım Case Study")
                         .contact(c)
                         .version(getClass().getPackage().getImplementationVersion() != null ? getClass().getPackage().getImplementationVersion() : "-"));
     }

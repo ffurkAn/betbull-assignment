@@ -9,7 +9,7 @@ public class Globals {
 
     // PROJECT
     public static final String PROJECT_CONTROLLER = "/api/project/";
-    public static final String PROJECT_SAVE = "v1/saveProject";
+    public static final String PROJECT_SAVE = "v1/savePlayer";
     public static final String PROJECT_STATE_UPDATE = "v1/updateProjectState";
     public static final String PROJECT_UPDATE = "v1/updateProject";
     public static final String TEST_MKS = "v1/mks";

@@ -13,12 +13,14 @@ public class PlayerDTO {
 
     private Long id;
     private String playerName;
+    private Long teamId;
 
 
     static PlayerDTO map(Player player) {
         return new PlayerDTO(
                 player.getId(),
-                player.getPlayerName()
+                player.getName(),
+                player.getTeamId()
         );
     }
 }

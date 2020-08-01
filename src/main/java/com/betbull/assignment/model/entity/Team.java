@@ -12,13 +12,15 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "TEAM")
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private String teamName;
+
+    @Column(name = "name")
+    private String name;
 
 
     @OneToMany(fetch = FetchType.EAGER)

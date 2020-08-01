@@ -1,10 +1,19 @@
 package com.betbull.assignment.service;
 
 import com.betbull.assignment.model.dto.PlayerDTO;
+import com.betbull.assignment.model.entity.Player;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @ComponentScan("playerService")
 public interface IPlayerService {
-    void saveProject(PlayerDTO playerDTO);
+    void savePlayer(PlayerDTO playerDTO);
+
+    void updatePlayer(PlayerDTO playerDTO);
+
+    Optional<Player> findById(Long playerId);
+
+    List<Player> getAll();
 }

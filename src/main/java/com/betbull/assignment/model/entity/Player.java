@@ -18,8 +18,11 @@ public class Player {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "player_name")
-    private String playerName;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "team_id")
+    private Long teamId;
 
 
 }
