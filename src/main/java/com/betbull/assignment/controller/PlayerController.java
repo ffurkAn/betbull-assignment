@@ -27,6 +27,8 @@ import java.util.List;
 @Tag(name = "playerController")
 public class PlayerController {
 
+    public static final String TEAM_ID = "teamId";
+
     @Autowired
     IPlayerService playerService;
 
@@ -64,6 +66,7 @@ public class PlayerController {
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
 
+
     /**
      * @return
      */
@@ -74,9 +77,11 @@ public class PlayerController {
                     content = @Content(schema = @Schema(implementation = MyResponse.class)))
     })
     @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Player>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(playerService.getAll());
+    public ResponseEntity<List<Player>> getAll(@RequestParam(value = TEAM_ID, required = false) String teamId) {
+        return ResponseEntity.status(HttpStatus.OK).body(playerService.getAllByTeamId(teamId));
     }
+
+
 
 
 

@@ -2,9 +2,8 @@ package com.betbull.assignment.model.entity;
 
 
 import com.betbull.assignment.model.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Base64;
@@ -20,7 +19,18 @@ public class Team extends BaseEntity{
     private String name;
 
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "team_id", referencedColumnName = "id", insertable = false)
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "team_player",
+            joinColumns = @JoinColumn(
+                    name = "teamId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "playerId"
+            )
+    )
     private Set<Player> playerSet;
 }

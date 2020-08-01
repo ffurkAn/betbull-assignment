@@ -7,11 +7,13 @@ import com.betbull.assignment.model.entity.Team;
 import com.betbull.assignment.repository.PlayerRepository;
 import com.betbull.assignment.service.IPlayerService;
 import com.betbull.assignment.service.ITeamService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerService implements IPlayerService {
@@ -32,8 +34,7 @@ public class PlayerService implements IPlayerService {
         }
 
         Player player = new Player();
-        player.setName(playerDTO.getPlayerName());
-        player.setTeamId(t.get().getId());
+        player.setName(playerDTO.getName());
 
         playerRepository.save(player);
 
@@ -55,8 +56,7 @@ public class PlayerService implements IPlayerService {
         }
 
         Player playerFound = playerOptional.get();
-        playerFound.setName(playerDTO.getPlayerName());
-        playerFound.setTeamId(playerDTO.getTeamId());
+        playerFound.setName(playerDTO.getName());
 
         playerRepository.save(playerFound);
 
@@ -71,6 +71,15 @@ public class PlayerService implements IPlayerService {
     @Override
     public List<Player> getAll() {
         return playerRepository.findAll();
+    }
+
+    @Override
+    public List<Player> getAllByTeamId(String teamId) {
+        if(StringUtils.isEmpty(teamId)){
+            return getAll();
+        }else{
+            return getAll().stream().filter(p -> p.getTeamSet().stream().anyMatch(t -> t.getId().equals(teamId))).collect(Collectors.toList());
+        }
     }
 
 }

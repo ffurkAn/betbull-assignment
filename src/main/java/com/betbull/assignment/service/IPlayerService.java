@@ -16,4 +16,6 @@ public interface IPlayerService {
     Optional<Player> findById(String playerId);
 
     List<Player> getAll();
+
+    List<Player> getAllByTeamId(String teamId);
 }

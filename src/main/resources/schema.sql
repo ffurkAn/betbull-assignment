@@ -10,6 +10,13 @@ create table player
 (
   id VARCHAR (36) not null,
   name varchar(50) not null,
-  team_id VARCHAR (26) not null,
   primary key(id)
 );
+
+CREATE table team_player
+(
+  id VARCHAR (36) NOT NULL,
+  team_id VARCHAR (36) NOT NULL ,
+  player_id VARCHAR (36) NOT NULL ,
+  PRIMARY KEY (team_id, player_id)
+)

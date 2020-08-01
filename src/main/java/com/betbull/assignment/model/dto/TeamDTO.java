@@ -1,4 +1,4 @@
 package com.betbull.assignment.model.dto;
 
-public class TeamInfo {
+public class TeamDTO {
 }
