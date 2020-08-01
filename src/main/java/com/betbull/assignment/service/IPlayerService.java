@@ -18,4 +18,6 @@ public interface IPlayerService {
     List<Player> getAll();
 
     List<Player> getAllByTeamId(String teamId);
+
+    void delete(String id);
 }

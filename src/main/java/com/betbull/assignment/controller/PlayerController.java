@@ -44,7 +44,7 @@ public class PlayerController {
                     content = @Content(schema = @Schema(implementation = MyResponse.class)))
     })
     @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MyResponse> savePlayer(@RequestBody PlayerDTO playerDTO) {
+    public ResponseEntity<MyResponse> save(@RequestBody PlayerDTO playerDTO) {
         playerService.savePlayer(playerDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
@@ -61,7 +61,7 @@ public class PlayerController {
                     content = @Content(schema = @Schema(implementation = MyResponse.class)))
     })
     @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MyResponse> updatePlayer(@RequestBody PlayerDTO playerDTO) {
+    public ResponseEntity<MyResponse> update(@RequestBody PlayerDTO playerDTO) {
         playerService.updatePlayer(playerDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
     }
@@ -80,6 +80,23 @@ public class PlayerController {
     public ResponseEntity<List<Player>> getAll(@RequestParam(value = TEAM_ID, required = false) String teamId) {
         return ResponseEntity.status(HttpStatus.OK).body(playerService.getAllByTeamId(teamId));
     }
+
+    /**
+     * @return
+     */
+    @Operation(summary = "Proje Tanımlama Servisi",
+            description = "Proje ve girişimci/girişim şirketi bilgilerinin tanımlandığı servistir.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = Globals.SUCCESS,
+                    content = @Content(schema = @Schema(implementation = MyResponse.class)))
+    })
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MyResponse> delete(@RequestBody PlayerDTO playerDTO) {
+        playerService.delete(playerDTO.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(new MyResponse(Globals.SUCCESS_CODE, Globals.SUCCESS));
+    }
+
+
 
 
 

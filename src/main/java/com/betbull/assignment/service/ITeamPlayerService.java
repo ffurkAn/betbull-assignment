@@ -6,4 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("teamPlayerService")
 public interface ITeamPlayerService {
     void save(TeamPlayerDTO teamPlayerDTO);
+
+    void deleteByPlayerId(String id);
 }

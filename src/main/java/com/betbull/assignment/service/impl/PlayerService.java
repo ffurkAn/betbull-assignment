@@ -100,4 +100,15 @@ public class PlayerService implements IPlayerService {
         }
     }
 
+    @Override
+    public void delete(String id) {
+        Optional<Player> playerOptional = findById(id);
+
+        if(!playerOptional.isPresent()){
+            throw new BetException("500", "Oyuncu bulunamadı. id: " + id);
+        }
+
+        teamPlayerService.deleteByPlayerId(id);
+    }
+
 }
