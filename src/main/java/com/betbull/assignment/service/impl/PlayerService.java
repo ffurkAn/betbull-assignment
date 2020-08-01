@@ -25,7 +25,7 @@ public class PlayerService implements IPlayerService {
     @Override
     public void savePlayer(PlayerDTO playerDTO) {
 
-        Optional<Team> t = Optional.empty(); //teamService.findById(playerDTO.getTeamId());
+        Optional<Team> t = teamService.findById(playerDTO.getTeamId());
 
         if(!t.isPresent()){
             throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + playerDTO.getTeamId());
@@ -48,7 +48,7 @@ public class PlayerService implements IPlayerService {
             throw new BetException("500", "Güncellenmek istenen oyuncu bulunamadı. id:" + playerDTO.getId());
         }
 
-        Optional<Team> t =  Optional.empty(); //teamService.findById(playerDTO.getTeamId());
+        Optional<Team> t =  teamService.findById(playerDTO.getTeamId());
 
         if(!t.isPresent()){
             throw new BetException("500", "Belirtilen id için takım bulunamadı. id:" + playerDTO.getTeamId());
@@ -63,7 +63,7 @@ public class PlayerService implements IPlayerService {
     }
 
     @Override
-    public Optional<Player> findById(Long playerId){
+    public Optional<Player> findById(String playerId){
 
         return playerRepository.findById(playerId);
     }

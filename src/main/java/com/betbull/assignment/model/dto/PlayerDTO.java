@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PlayerDTO {
 
-    private Long id;
+    private String id;
     private String playerName;
-    private Long teamId;
+    private String teamId;
 
 
     static PlayerDTO map(Player player) {

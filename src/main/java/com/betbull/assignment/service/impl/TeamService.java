@@ -10,12 +10,12 @@ import java.util.Optional;
 
 @Service
 public class TeamService implements ITeamService {
-//
-//    @Autowired
-//    TeamRepository teamRepository;
-//
-//    @Override
-//    public Optional<Team> findById(Long id) {
-//        return teamRepository.findById(id);
-//    }
+
+    @Autowired
+    TeamRepository teamRepository;
+
+    @Override
+    public Optional<Team> findById(String id) {
+        return teamRepository.findById(id);
+    }
 }

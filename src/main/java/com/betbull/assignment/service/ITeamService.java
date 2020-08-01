@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @ComponentScan("teamService")
 public interface ITeamService {
-//    Optional<Team> findById(Long id);
+    Optional<Team> findById(String id);
 }

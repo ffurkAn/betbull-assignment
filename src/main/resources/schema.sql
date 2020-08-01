@@ -1,6 +1,6 @@
 create table team
 (
-  id bigint auto_increment not null,
+  id VARCHAR (36) not null,
   name varchar(50) not null,
   primary key(id)
 );
@@ -8,8 +8,8 @@ create table team
 
 create table player
 (
-  id bigint auto_increment not null,
+  id VARCHAR (36) not null,
   name varchar(50) not null,
-  team_id bigint not null,
+  team_id VARCHAR (26) not null,
   primary key(id)
 );

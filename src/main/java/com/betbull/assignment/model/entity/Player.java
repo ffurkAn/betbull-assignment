@@ -1,8 +1,10 @@
 package com.betbull.assignment.model.entity;
 
+import com.betbull.assignment.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -11,18 +13,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "PLAYER")
-public class Player {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+public class Player extends BaseEntity {
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "team_id")
-    private Long teamId;
-
+    private String  teamId;
 
 }

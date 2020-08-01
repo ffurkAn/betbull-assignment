@@ -13,7 +13,7 @@ public interface IPlayerService {
 
     void updatePlayer(PlayerDTO playerDTO);
 
-    Optional<Player> findById(Long playerId);
+    Optional<Player> findById(String playerId);
 
     List<Player> getAll();
 }
