@@ -2,17 +2,20 @@ package com.betbull.assignment.service.impl;
 
 import com.betbull.assignment.model.BetException;
 import com.betbull.assignment.model.dto.PlayerDTO;
+import com.betbull.assignment.model.dto.TeamPlayerDTO;
 import com.betbull.assignment.model.entity.Player;
 import com.betbull.assignment.model.entity.Team;
+import com.betbull.assignment.model.entity.TeamPlayer;
 import com.betbull.assignment.repository.PlayerRepository;
+import com.betbull.assignment.repository.TeamPlayerRepository;
 import com.betbull.assignment.service.IPlayerService;
 import com.betbull.assignment.service.ITeamService;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +26,9 @@ public class PlayerService implements IPlayerService {
 
     @Autowired
     PlayerRepository playerRepository;
+
+    @Autowired
+    TeamPlayerService teamPlayerService;
 
     @Override
     public void savePlayer(PlayerDTO playerDTO) {
@@ -36,7 +42,18 @@ public class PlayerService implements IPlayerService {
         Player player = new Player();
         player.setName(playerDTO.getName());
 
+        Set<Team> teamSet = new HashSet<>();
+        teamSet.add(t.get());
+        player.setTeamSet(teamSet);
+
         playerRepository.save(player);
+
+        TeamPlayerDTO teamPlayerDTO = new TeamPlayerDTO();
+        teamPlayerDTO.setTeamId(t.get().getId());
+        teamPlayerDTO.setPlayerId(player.getId());
+
+        teamPlayerService.save(teamPlayerDTO);
+
 
     }
 
@@ -57,6 +74,7 @@ public class PlayerService implements IPlayerService {
 
         Player playerFound = playerOptional.get();
         playerFound.setName(playerDTO.getName());
+        playerFound.getTeamSet().add(t.get());
 
         playerRepository.save(playerFound);
 
